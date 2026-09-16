@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Syntax check
+        run: python -m py_compile music_video_pipeline.py
+
+      - name: Static analysis
+        run: |
+          python -c "import ast; ast.parse(open('music_video_pipeline.py').read()); print('Syntax OK')"
+
+      - name: Check project files
+        run: |
+          test -f README.md && echo "README.md exists"
+          test -f music_video_pipeline.py && echo "music_video_pipeline.py exists"
