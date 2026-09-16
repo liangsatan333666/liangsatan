@@ -21,10 +21,6 @@ jobs:
       - name: Syntax check
         run: python -m py_compile music_video_pipeline.py
 
-      - name: Static analysis
-        run: |
-          python -c "import ast; ast.parse(open('music_video_pipeline.py').read()); print('Syntax OK')"
-
       - name: Check project files
         run: |
           test -f README.md && echo "README.md exists"
